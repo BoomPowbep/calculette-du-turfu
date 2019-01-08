@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="onClick"
-                android:tag="OP"
+                android:tag="AC"
                 android:text="@string/ac"
                 />
         </LinearLayout>
@@ -455,7 +455,7 @@
                 android:layout_height="match_parent"
                 android:text="@string/equals"
                 android:onClick="onClick"
-                android:tag="OP"
+                android:tag="EQ"
                 />
         </LinearLayout>
 

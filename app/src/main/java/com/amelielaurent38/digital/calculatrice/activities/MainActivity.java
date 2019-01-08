@@ -7,8 +7,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.amelielaurent38.digital.calculatrice.R;
+import com.amelielaurent38.digital.calculatrice.models.Operation;
+import com.amelielaurent38.digital.calculatrice.models.OperationType;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    String calcul = "";
+    OperationType operationType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Est appelées lorsque l'on clique sur un bouton
+     *
      * @param v La vue à l'origine de l'événement
      */
     @Override
@@ -37,10 +44,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String tag = v.getTag().toString();
 
         Button button = (Button) v;
+
         switch (tag) {
-            case "OP":
+            case "AC":
+
+                result.setText("");
                 this.handleOperation(button);
                 break;
+
+            case "OP":
+                operationType = this.handleOperation(button);
+                result.append(operationType.toString());
+                break;
+
+            case "EQ":
+
+                String[] parts = result.getText().toString().split(getSplitter());
+
+                double Number1 = Double.parseDouble(parts[0]);
+                double Number2 = Double.parseDouble(parts[1]);
+
+                Operation theOperation = new Operation(Number1, Number2, operationType);
+                result.setText(String.format(theOperation.getResult().toString()));
+
+                break;
+
 
             case "NB":
                 result.append(button.getText());
@@ -55,29 +83,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Permet de récupérer le type de l'opération actuelle et effectue l'opération
+     *
      * @param btn Le bouton qui a été cliqué
-     *            
      * @return String
      */
-    private String handleOperation(Button btn) {
+    private OperationType handleOperation(Button btn) {
         int bt_id = btn.getId();
         switch (bt_id) {
             case R.id.bt_plus:
-                return "plus";
+                return OperationType.ADDTION;
 
             case R.id.bt_minus:
-                return "minus";
+                return OperationType.SOUSTRACTION;
 
             case R.id.bt_divide:
-                return "divide";
+                return OperationType.DIVISION;
 
             case R.id.bt_multiply:
-                return "multiply";
+                return OperationType.MUTIPLICATION;
 
-            case R.id.bt_equals:
-                return "equals";
         }
-        return "";
+        return OperationType.UNKOWN;
+    }
+
+    /**
+     * 
+     * @return
+     */
+    private String getSplitter() {
+        switch (operationType) {
+            case ADDTION:
+                return "\\+";
+            case DIVISION:
+                return "\\/";
+            case MUTIPLICATION:
+                return "\\*";
+            default:
+                return operationType.toString();
+        }
     }
 
 }
