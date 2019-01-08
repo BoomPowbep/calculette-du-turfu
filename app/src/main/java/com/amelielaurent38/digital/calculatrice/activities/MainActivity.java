@@ -1,11 +1,12 @@
-package com.amelielaurent38.digital.calculatrice;
+package com.amelielaurent38.digital.calculatrice.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.amelielaurent38.digital.calculatrice.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -18,7 +19,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Est appelées lorsque l'on clique sur un bouton
-     * @param v
+     * @param v La vue à l'origine de l'événement
      */
     @Override
     public void onClick(View v) {
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = (Button) v;
         switch (tag) {
             case "OP":
-                String operator = this.operationType(button);
+                this.handleOperation(button);
                 break;
 
             case "NB":
@@ -51,20 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    /**
-     * Gère une opération
-     * @param btn
-     */
-    private void handleOperation(Button btn) {
-
-    }
 
     /**
-     * Permet de récupérer le type de l'opération actuelle
-     * @param btn
+     * Permet de récupérer le type de l'opération actuelle et effectue l'opération
+     * @param btn Le bouton qui a été cliqué
+     *            
      * @return String
      */
-    private String operationType(Button btn) {
+    private String handleOperation(Button btn) {
         int bt_id = btn.getId();
         switch (bt_id) {
             case R.id.bt_plus:
@@ -86,3 +81,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 }
+
+
