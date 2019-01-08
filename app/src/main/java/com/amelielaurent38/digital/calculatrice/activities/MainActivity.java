@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView result = findViewById(R.id.tv_result);
+        result.setText("0");
     }
 
 
@@ -32,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
 
         TextView result = findViewById(R.id.tv_result);
+
+        CharSequence sdkhjfg = result.getText();
+
+        if (result.getText().toString().equals("0")) {
+            result.setText("");
+        }
 
         if (!(v instanceof Button)) {
             return;
@@ -48,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (tag) {
             case "AC":
 
-                result.setText("");
+                result.setText("0");
                 this.handleOperation(button);
                 break;
 
@@ -112,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Gère les cas problématiques de regex avec les opérateurs
+     *
      * @return
      */
     private String getSplitter() {
