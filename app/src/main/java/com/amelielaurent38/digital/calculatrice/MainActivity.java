@@ -16,6 +16,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    /**
+     * Est appelées lorsque l'on clique sur un bouton
+     * @param v
+     */
     @Override
     public void onClick(View v) {
 
@@ -34,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = (Button) v;
         switch (tag) {
             case "OP":
-                result.setText("");
+                String operator = this.operationType(button);
                 break;
 
             case "NB":
@@ -46,4 +50,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     }
+
+    /**
+     * Gère une opération
+     * @param btn
+     */
+    private void handleOperation(Button btn) {
+
+    }
+
+    /**
+     * Permet de récupérer le type de l'opération actuelle
+     * @param btn
+     * @return String
+     */
+    private String operationType(Button btn) {
+        int bt_id = btn.getId();
+        switch (bt_id) {
+            case R.id.bt_plus:
+                return "plus";
+
+            case R.id.bt_minus:
+                return "minus";
+
+            case R.id.bt_divide:
+                return "divide";
+
+            case R.id.bt_multiply:
+                return "multiply";
+
+            case R.id.bt_equals:
+                return "equals";
+        }
+        return "";
+    }
+
 }
