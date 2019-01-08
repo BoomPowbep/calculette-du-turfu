@@ -5,6 +5,7 @@ public enum OperationType {
     SOUSTRACTION("-"),
     MUTIPLICATION("*"),
     DIVISION("/"),
+    PERCENT("%"),
     UNKOWN("");
 
     private String value;

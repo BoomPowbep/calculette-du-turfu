@@ -21,6 +21,12 @@ public class Operation {
                 return doAddition();
             case SOUSTRACTION:
                 return doSoustraction();
+            case DIVISION:
+                return doDivision();
+            case MUTIPLICATION:
+                return doMultiplication();
+            case PERCENT:
+                return doPercent();
             default:
                 return 0.0;
         }
@@ -50,16 +56,16 @@ public class Operation {
         return this.number1 - this.number2;
     }
 
-    public double doDivision() {
+    private double doDivision() {
         return this.number1 / this.number2;
     }
 
-    public double doMultiplication() {
+    private double doMultiplication() {
         return this.number1 * this.number2;
     }
 
-    public double doModulo() {
-        return this.number1 % this.number2;
+    private double doPercent() {
+        return this.number1 / 100;
     }
 
 }

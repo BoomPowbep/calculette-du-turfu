@@ -102,12 +102,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.bt_multiply:
                 return OperationType.MUTIPLICATION;
 
+            case R.id.bt_percent:
+                return OperationType.PERCENT;
+
         }
+
         return OperationType.UNKOWN;
     }
 
     /**
-     * 
+     * Gère les cas problématiques de regex avec les opérateurs
      * @return
      */
     private String getSplitter() {

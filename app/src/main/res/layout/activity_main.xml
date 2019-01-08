@@ -426,12 +426,12 @@
             android:padding="@dimen/padding">
 
             <Button
-                android:id="@+id/bt_comma"
+                android:id="@+id/bt_point"
                 style="@style/ButtonDark"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/comma"
+                android:text="@string/point"
                 android:onClick="onClick"
                 android:tag="NB"
                 />
