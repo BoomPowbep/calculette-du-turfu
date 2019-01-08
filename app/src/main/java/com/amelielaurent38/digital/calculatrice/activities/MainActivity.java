@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     String calcul = "";
-    OperationType operationType;
+    OperationType operationType = OperationType.UNKOWN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +34,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
 
-        TextView result = findViewById(R.id.tv_result);
-
-        CharSequence sdkhjfg = result.getText();
-
-        if (result.getText().toString().equals("0")) {
-            result.setText("");
-        }
-
         if (!(v instanceof Button)) {
             return;
+        }
+
+        String tag = v.getTag().toString();
+        Button button = (Button) v;
+        TextView result = findViewById(R.id.tv_result);
+        int bt_id = button.getId();
+
+
+        if (result.getText().toString().equals("0")) {
+
+            if(bt_id != R.id.bt_point){
+                result.setText("");
+            }
         }
 
         if (v.getTag() == null) {
             return;
         }
-
-        String tag = v.getTag().toString();
-
-        Button button = (Button) v;
 
         switch (tag) {
             case "AC":
@@ -70,11 +71,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 String[] parts = result.getText().toString().split(getSplitter());
 
-                double Number1 = Double.parseDouble(parts[0]);
-                double Number2 = Double.parseDouble(parts[1]);
+                if(parts.length <2) {
+                    System.out.println("fuck you");
+                    return;
+                }else {
 
-                Operation theOperation = new Operation(Number1, Number2, operationType);
-                result.setText(String.format(theOperation.getResult().toString()));
+                    double Number1 = Double.parseDouble(parts[0]);
+                    double Number2 = Double.parseDouble(parts[1]);
+
+                    Operation theOperation = new Operation(Number1, Number2, operationType);
+                    result.setText(String.format(theOperation.getResult().toString()));
+                }
+
 
                 break;
 
