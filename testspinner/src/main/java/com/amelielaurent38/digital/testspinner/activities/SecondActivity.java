@@ -2,10 +2,12 @@ package com.amelielaurent38.digital.testspinner.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amelielaurent38.digital.testspinner.R;
 import com.amelielaurent38.digital.testspinner.models.Planete;
+import com.squareup.picasso.Picasso;
 
 public class SecondActivity extends AppCompatActivity {
 
@@ -20,11 +22,15 @@ public class SecondActivity extends AppCompatActivity {
         if (b != null) {
             mPlanet = b.getParcelable("planet");
 
-            TextView MySecondtextView = findViewById(R.id.title_planet);
-            MySecondtextView.setText(mPlanet.getTitre());
+            TextView mySecondtextView = findViewById(R.id.title_planet);
+            mySecondtextView.setText(mPlanet.getTitre());
 
-            TextView MyDescriptiontextView = findViewById(R.id.description_planet);
-            MyDescriptiontextView.setText(mPlanet.getDescription());
+            TextView myDescriptiontextView = findViewById(R.id.description_planet);
+            myDescriptiontextView.setText(mPlanet.getDescription());
+
+            ImageView myImage = findViewById(R.id.image_planet);
+            Picasso.get().load("http://i.imgur.com/DvpvklR.png").resize(1000, 300) // resizes the image to these dimensions (in pixel)
+                    .centerCrop().into(myImage);
         }
     }
 

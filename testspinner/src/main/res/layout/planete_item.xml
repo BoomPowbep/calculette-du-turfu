@@ -30,10 +30,19 @@
 
         <TextView
             android:id="@+id/textDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="lorem ipsum"
             app:layout_constraintTop_toBottomOf="@id/textTitre" />
+
+        <Button
+            android:id="@+id/buttonShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toBottomOf="@id/image"
+            app:layout_constraintStart_toEndOf="@id/textDescription"
+            />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

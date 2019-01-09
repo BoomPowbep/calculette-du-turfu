@@ -6,11 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amelielaurent38.digital.testspinner.R;
 import com.amelielaurent38.digital.testspinner.activities.SecondActivity;
+import com.amelielaurent38.digital.testspinner.listeners.PlanetListener;
 import com.amelielaurent38.digital.testspinner.models.Planete;
 import com.squareup.picasso.Picasso;
 
@@ -19,9 +21,11 @@ import java.util.List;
 public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHolder> {
 
     List<Planete> planetes;
+    private PlanetListener listener;
 
-    public PlanetAdapter(List<Planete> planetes) {
+    public PlanetAdapter(List<Planete> planetes , PlanetListener listener) {
         this.planetes = planetes;
+        this.listener = listener;
     }
 
     @NonNull
@@ -29,7 +33,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View view = inflater.inflate(R.layout.planete_item, null);
+        View view = inflater.inflate(R.layout.planete_item, parent, false);
         MyViewHolder vh = new MyViewHolder(view);
         return vh;
     }
@@ -44,11 +48,12 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
         return planetes.size();
     }
 
-    static class MyViewHolder extends RecyclerView.ViewHolder {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mTitle;
         TextView mDescription;
         ImageView mImage;
         View view;
+        Button mbuttonShare;
 
         MyViewHolder(View v) {
             super(v);
@@ -56,6 +61,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
             mTitle = v.findViewById(R.id.textTitre);
             mDescription = v.findViewById(R.id.textDescription);
             mImage = v.findViewById(R.id.image);
+            mbuttonShare = v.findViewById(R.id.buttonShare);
 
         }
 
@@ -69,6 +75,12 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
                 }
             });
 
+            mbuttonShare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onShare(planete);
+                }
+            });
             mTitle.setText(planete.getTitre());
             mDescription.setText(planete.getDescription());
             Picasso.get().load("http://i.imgur.com/DvpvklR.png").resize(1000, 300) // resizes the image to these dimensions (in pixel)

@@ -1,5 +1,6 @@
 package com.amelielaurent38.digital.testspinner.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,12 +13,13 @@ import android.widget.Spinner;
 import com.amelielaurent38.digital.testspinner.Adapter.MyAdapter;
 import com.amelielaurent38.digital.testspinner.Adapter.PlanetAdapter;
 import com.amelielaurent38.digital.testspinner.R;
+import com.amelielaurent38.digital.testspinner.listeners.PlanetListener;
 import com.amelielaurent38.digital.testspinner.models.Planete;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PlanetListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +28,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_view);
 
         List<Planete> planetes = new ArrayList<>();
-        planetes.add(new Planete("", "Terre", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Mars", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Mercure", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
+        planetes.add(new Planete("", "Terre", "La planete terre blblab"));
+        planetes.add(new Planete("", "Mars", "La planete mars"));
+        planetes.add(new Planete("", "Mercure", "La planete Mercure"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
 
         RecyclerView recyclerView = findViewById(R.id.list_planet);
-        PlanetAdapter adapter = new PlanetAdapter(planetes);
+        PlanetAdapter adapter = new PlanetAdapter(planetes, this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
@@ -55,4 +57,12 @@ public class MainActivity extends AppCompatActivity {
         sp.setAdapter(dataAdapter);*/
     }
 
+    @Override
+    public void onShare(Planete planete) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "planete"+ planete.getTitre() + "est trop bien" );
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
 }
