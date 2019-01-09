@@ -10,9 +10,12 @@ import com.amelielaurent38.digital.calculatrice.R;
 import com.amelielaurent38.digital.calculatrice.models.Operation;
 import com.amelielaurent38.digital.calculatrice.models.OperationType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-
+    List<Operation> historique = new ArrayList<>();
     String calcul = "";
     OperationType operationType = OperationType.UNKOWN;
 
@@ -56,18 +59,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         switch (tag) {
-            case "AC":
+            case "AC": // Effacement
 
                 result.setText("0");
                 this.handleOperation(button);
                 break;
 
-            case "OP":
+            case "OP": // Opération
                 operationType = this.handleOperation(button);
                 result.append(operationType.toString());
                 break;
 
-            case "EQ":
+            case "EQ": // Egal
 
                 String[] parts = result.getText().toString().split(getSplitter());
 
@@ -80,14 +83,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     double Number2 = Double.parseDouble(parts[1]);
 
                     Operation theOperation = new Operation(Number1, Number2, operationType);
-                    result.setText(String.format(theOperation.getResult().toString()));
+                    String resultFinal = String.format(theOperation.getResult().toString());
+                    historique.add(theOperation);
+                    result.setText(resultFinal);
                 }
 
 
                 break;
 
 
-            case "NB":
+            case "NB": // Chiffre
                 result.append(button.getText());
                 break;
             default:

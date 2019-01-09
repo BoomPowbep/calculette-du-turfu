@@ -1,51 +1,42 @@
 package com.amelielaurent38.digital.calculatrice.models;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  *
  */
 
 public class Operation {
 
-    private double number1, number2;
+    private double number1, number2, result;
     private OperationType operationType;
+    private Date theDate;
 
     public Operation(double Number1, double Number2, OperationType operationType) {
         this.number1 = Number1;
         this.number2 = Number2;
         this.operationType = operationType;
+        this.result = 0.0;
     }
 
     public Double getResult() {
+        theDate = Calendar.getInstance().getTime();
+        System.out.println(theDate);
         switch (operationType) {
             case ADDTION:
-                return doAddition();
+                return result = doAddition();
             case SOUSTRACTION:
-                return doSoustraction();
+                return result = doSoustraction();
             case DIVISION:
-                return doDivision();
+                return result = doDivision();
             case MUTIPLICATION:
-                return doMultiplication();
+                return result = doMultiplication();
             case PERCENT:
-                return doPercent();
+                return result = doPercent();
             default:
                 return 0.0;
         }
-    }
-
-    public double getNumber1() {
-        return number1;
-    }
-
-    public void setNumber1(double number1) {
-        this.number1 = number1;
-    }
-
-    public double getNumber2() {
-        return number2;
-    }
-
-    public void setNumber2(double number2) {
-        this.number2 = number2;
     }
 
     private double doAddition() {

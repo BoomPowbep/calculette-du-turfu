@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements PlanetListener {
     public void onShare(Planete planete) {
         Intent sendIntent = new Intent();
         sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "planete"+ planete.getTitre() + "est trop bien" );
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "La planete "+ planete.getTitre() + " est trop bien" );
         sendIntent.setType("text/plain");
         startActivity(sendIntent);
     }
