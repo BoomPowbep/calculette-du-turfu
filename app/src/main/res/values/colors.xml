@@ -6,4 +6,5 @@
     <color name="colorButtonLight"> #A7A6A7</color>
     <color name="colorButtonDark"> #333333</color>
     <color name="colorButtonPrimary"> #FE9603</color>
+    <color name="white">#FFFFFF</color>
 </resources>
