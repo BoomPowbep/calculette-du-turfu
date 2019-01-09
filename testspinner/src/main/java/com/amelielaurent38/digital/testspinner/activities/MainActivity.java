@@ -26,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.recycler_view);
 
         List<Planete> planetes = new ArrayList<>();
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
+        planetes.add(new Planete("", "Terre", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
+        planetes.add(new Planete("", "Mars", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
+        planetes.add(new Planete("", "Mercure", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
         planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
 
-        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL ));
+       /* recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL ));*/
         /*String[] planetes = getResources().getStringArray(R.array.planetes);
 
         Spinner sp = findViewById(R.id.spinner);
