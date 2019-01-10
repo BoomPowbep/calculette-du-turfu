@@ -5,6 +5,7 @@ import android.os.Bundle;
 import com.amelielaurent38.digital.newsletter.R;
 import com.amelielaurent38.digital.newsletter.fragments.ArticleListFragment;
 import com.amelielaurent38.digital.newsletter.models.Article;
+import com.amelielaurent38.digital.newsletter.models.ArticleResult;
 import com.amelielaurent38.digital.newsletter.network.ArticleService;
 import com.amelielaurent38.digital.newsletter.utils.Constants;
 
@@ -26,21 +27,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://newsapi.org/v2/top-headlines?" + "country=us&" + "apiKey" + Constants.API_KEY)
+                .baseUrl("https://newsapi.org/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         ArticleService service = retrofit.create(ArticleService.class);
 
-        Call<List<Article>> articles_new = service.listRepos("octocat");
-        articles_new.enqueue(new Callback<List<Article>>() {
+        Call<ArticleResult> articles_new = service.listArticles("us", Constants.API_KEY);
+        articles_new.enqueue(new Callback<ArticleResult>() {
             @Override
-            public void onResponse(Call<List<Article>> call, Response<List<Article>> response) {
+            public void onResponse(Call<ArticleResult> call, Response<ArticleResult> response) {
+                response.body().getArticles();
                 System.out.println("Resultat Success" + response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Article>> call, Throwable t) {
+            public void onFailure(Call<ArticleResult> call, Throwable t) {
                 System.out.println("Resultat Erreur" + t.getLocalizedMessage());
             }
         });
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         showArticleList();
     }
 
-    private void showArticleList(){
+    private void showArticleList() {
         ArticleListFragment fragment = new ArticleListFragment();
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
