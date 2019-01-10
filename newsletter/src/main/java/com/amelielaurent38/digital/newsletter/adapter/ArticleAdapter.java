@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amelielaurent38.digital.newsletter.R;
+import com.amelielaurent38.digital.newsletter.listener.ShareListener;
 import com.amelielaurent38.digital.newsletter.models.Article;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -19,9 +21,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHolder> {
 
     List<Article> articles;
+    private ShareListener listener;
 
-    public ArticleAdapter(List<Article> articles) {
+    public ArticleAdapter(List<Article> articles, ShareListener listener) {
         this.articles = articles;
+        this.listener = listener;
     }
 
     @NonNull
@@ -48,7 +52,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
         TextView mDescription;
         ImageView mImage;
         View view;
-        //Button mbuttonShare;
+        ImageView mbuttonShare;
 
         MyViewHolder(View v) {
             super(v);
@@ -56,7 +60,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
             mTitle = v.findViewById(R.id.textTitre);
             mDescription = v.findViewById(R.id.textDescription);
             mImage = v.findViewById(R.id.image);
-            //mbuttonShare = v.findViewById(R.id.buttonShare);
+            mbuttonShare = v.findViewById(R.id.buttonShare);
 
         }
 
@@ -68,19 +72,19 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
                     intent.putExtra("planet", planete);
                     v.getContext().startActivity(intent);
                 }
-            });
+            });*/
 
             mbuttonShare.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onShare(planete);
+                    listener.onShare(article);
                 }
-            });*/
+            });
 
             mTitle.setText(article.getTitle());
             mDescription.setText(article.getDescription());
-           /* Picasso.get().load("http://i.imgur.com/DvpvklR.png").resize(1000, 300) // resizes the image to these dimensions (in pixel)
-                    .centerCrop().into(mImage);*/
+            Picasso.get().load(article.getImage()).resize(1000, 400) // resizes the image to these dimensions (in pixel)
+                    .centerCrop().into(mImage);
         }
     }
 }

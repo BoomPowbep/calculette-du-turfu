@@ -5,23 +5,23 @@ import android.os.Parcelable;
 
 public class Article implements Parcelable {
 
-    //String image;
+    String urlToImage;
     String title;
     String description;
 
     public Article(String image, String title, String description) {
-        //this.image = image;
+        this.urlToImage = image;
         this.title = title;
         this.description = description;
     }
 
-    /*public String getImage() {
-        return image;
+    public String getImage() {
+        return urlToImage;
     }
 
     public void setImage(String image) {
-        this.image = image;
-    }*/
+        this.urlToImage = image;
+    }
 
     public String getTitle() {
         return title;
@@ -47,13 +47,13 @@ public class Article implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        //dest.writeString(this.image);
+        dest.writeString(this.urlToImage);
         dest.writeString(this.title);
         dest.writeString(this.description);
     }
 
     protected Article(Parcel in) {
-        //this.image = in.readString();
+        this.urlToImage = in.readString();
         this.title = in.readString();
         this.description = in.readString();
     }
@@ -73,9 +73,9 @@ public class Article implements Parcelable {
     @Override
     public String toString() {
         return "Article{" +
-                "title='" + title + '\'' +
+                "urlToImage='" + urlToImage + '\'' +
+                ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
-
 }
