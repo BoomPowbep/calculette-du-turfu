@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.amelielaurent38.digital.testspinner.R;
-import com.amelielaurent38.digital.testspinner.activities.SecondActivity;
+import com.amelielaurent38.digital.testspinner.activities.PlanetDetailActivity;
+import com.amelielaurent38.digital.testspinner.fragments.PlanetListFragment;
 import com.amelielaurent38.digital.testspinner.listeners.PlanetListener;
 import com.amelielaurent38.digital.testspinner.models.Planete;
 import com.squareup.picasso.Picasso;
@@ -69,7 +70,7 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
             view.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), SecondActivity.class);
+                    Intent intent = new Intent(v.getContext(), PlanetDetailActivity.class);
                     intent.putExtra("planet", planete);
                     v.getContext().startActivity(intent);
                 }
@@ -81,6 +82,8 @@ public class PlanetAdapter extends RecyclerView.Adapter<PlanetAdapter.MyViewHold
                     listener.onShare(planete);
                 }
             });
+
+
             mTitle.setText(planete.getTitre());
             mDescription.setText(planete.getDescription());
             Picasso.get().load("http://i.imgur.com/DvpvklR.png").resize(1000, 300) // resizes the image to these dimensions (in pixel)

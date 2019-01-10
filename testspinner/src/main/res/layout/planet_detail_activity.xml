@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.SecondActivity"
+    tools:context=".activities.PlanetDetailActivity"
     android:layout_margin="20dp">
 
     <ImageView
@@ -29,5 +29,11 @@
         android:layout_height="wrap_content"
         android:text="blblbablblalabblalb bofbllezobfzeufbz"
         app:layout_constraintTop_toBottomOf="@id/title_planet"/>
+
+    <Button
+        android:id="@+id/button_alert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/description_planet"/>
 
 </android.support.constraint.ConstraintLayout>

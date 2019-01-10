@@ -1,68 +1,111 @@
 package com.amelielaurent38.digital.testspinner.activities;
 
-import android.content.Intent;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.amelielaurent38.digital.testspinner.Adapter.MyAdapter;
-import com.amelielaurent38.digital.testspinner.Adapter.PlanetAdapter;
 import com.amelielaurent38.digital.testspinner.R;
-import com.amelielaurent38.digital.testspinner.listeners.PlanetListener;
-import com.amelielaurent38.digital.testspinner.models.Planete;
+import com.amelielaurent38.digital.testspinner.fragments.PlanetDetailFragment;
+import com.amelielaurent38.digital.testspinner.fragments.PlanetListFragment;
+import com.amelielaurent38.digital.testspinner.models.Repo;
+import com.amelielaurent38.digital.testspinner.network.ArticleService;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PlanetListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class MainActivity extends AppCompatActivity  {
+
+    private static final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.recycler_view);
+        setContentView(R.layout.main_activity);
 
-        List<Planete> planetes = new ArrayList<>();
-        planetes.add(new Planete("", "Terre", "La planete terre blblab"));
-        planetes.add(new Planete("", "Mars", "La planete mars"));
-        planetes.add(new Planete("", "Mercure", "La planete Mercure"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
-        planetes.add(new Planete("", "Planet 1", "blab ablaks nksnd dskjdklskmds sdkjdklklmdkksdsd"));
+        showPlanetList();
 
-        RecyclerView recyclerView = findViewById(R.id.list_planet);
-        PlanetAdapter adapter = new PlanetAdapter(planetes, this);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
+        /*if(ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "Coucou", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
 
-       /* recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL ));*/
-        /*String[] planetes = getResources().getStringArray(R.array.planetes);
+            }
+        }*/
 
-        Spinner sp = findViewById(R.id.spinner);
-        ArrayAdapter<String> dataAdapter = new MyAdapter(this,
-                planetes);
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sp.setAdapter(dataAdapter);*/
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.github.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ArticleService service = retrofit.create(ArticleService.class);
+
+        Call<List<Repo>> repos = service.listRepos("octocat");
+        repos.enqueue(new Callback<List<Repo>>() {
+            @Override
+            public void onResponse(Call<List<Repo>> call, Response<List<Repo>> response) {
+                System.out.println("Resultat Success" + response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Repo>> call, Throwable t) {
+                System.out.println("Resultat Erreur" + t.getLocalizedMessage());
+            }
+        });
+
+
+
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CALL_PHONE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Permission is not granted
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.CALL_PHONE)) {
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+            } else {
+                // No explanation needed; request the permission
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.CALL_PHONE},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        } else {
+            // Permission has already been granted
+        }
     }
 
-    @Override
-    public void onShare(Planete planete) {
-        Intent sendIntent = new Intent();
-        sendIntent.setAction(Intent.ACTION_SEND);
-        sendIntent.putExtra(Intent.EXTRA_TEXT, "La planete "+ planete.getTitre() + " est trop bien" );
-        sendIntent.setType("text/plain");
-        startActivity(sendIntent);
+
+    private void showPlanetList(){
+        PlanetListFragment fragment = new PlanetListFragment();
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
+
 }

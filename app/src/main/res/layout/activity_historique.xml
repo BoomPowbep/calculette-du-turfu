@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HistoriqueActivity"
-    android:background="@color/colorAccent">
+    android:background="@color/colorAccent"
+    android:padding="@dimen/padding">
 
     <TextView
         android:id="@+id/histo_title"
@@ -17,6 +18,7 @@
         android:textSize="64dp" />
 
     <android.support.v7.app.AlertController.RecycleListView
+        android:id="@+id/histo_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/histo_title">
