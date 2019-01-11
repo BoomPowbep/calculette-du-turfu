@@ -3,16 +3,45 @@ package com.amelielaurent38.digital.newsletter.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Article implements Parcelable {
 
-    String urlToImage;
-    String title;
-    String description;
+    @ColumnInfo(name = "article_image")
 
-    public Article(String image, String title, String description) {
-        this.urlToImage = image;
-        this.title = title;
-        this.description = description;
+    public String urlToImage;
+
+    @ColumnInfo(name = "article_title")
+    public String title;
+
+    @PrimaryKey
+    @NonNull
+    private String url;
+
+    @ColumnInfo(name = "article_description")
+    public String description;
+
+    public Article() {
+    }
+
+    public String getUrlToImage() {
+        return urlToImage;
+    }
+
+    public void setUrlToImage(String urlToImage) {
+        this.urlToImage = urlToImage;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getImage() {
