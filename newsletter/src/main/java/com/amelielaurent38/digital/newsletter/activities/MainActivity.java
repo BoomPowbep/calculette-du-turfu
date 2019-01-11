@@ -3,6 +3,7 @@ package com.amelielaurent38.digital.newsletter.activities;
 import android.os.Bundle;
 
 import com.amelielaurent38.digital.newsletter.R;
+import com.amelielaurent38.digital.newsletter.database.DatabaseHelper;
 import com.amelielaurent38.digital.newsletter.fragments.ArticleListFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        DatabaseHelper.init(this);
 
         showArticleList();
     }

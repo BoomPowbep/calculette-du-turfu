@@ -1,15 +1,20 @@
 package com.amelielaurent38.digital.newsletter.viewmodel;
 
+import android.widget.Toast;
+
+import com.amelielaurent38.digital.newsletter.database.DatabaseHelper;
 import com.amelielaurent38.digital.newsletter.models.Article;
 import com.amelielaurent38.digital.newsletter.models.ArticleResult;
 import com.amelielaurent38.digital.newsletter.network.ArticleService;
 import com.amelielaurent38.digital.newsletter.utils.Constants;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import bolts.Task;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,15 +25,17 @@ public class ArticleViewModel extends ViewModel {
 
     private MutableLiveData<List<Article>> articlesLiveData;
 
-    public LiveData<List<Article>> getArticles(){
-        if(articlesLiveData == null){
+    private MutableLiveData<Article> selected = new MutableLiveData<>();
+
+    public LiveData<List<Article>> getArticles() {
+        if (articlesLiveData == null) {
             articlesLiveData = new MutableLiveData<>();
             loadArticles();
         }
         return articlesLiveData;
     }
 
-    private void loadArticles(){
+    private void loadArticles() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://newsapi.org/v2/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -43,6 +50,9 @@ public class ArticleViewModel extends ViewModel {
                 List<Article> articles = response.body().getArticles();
                 articlesLiveData.setValue(articles);
 
+                //On sauvegarde les articles dans la database
+                saveNews(articles);
+
             }
 
             @Override
@@ -50,6 +60,24 @@ public class ArticleViewModel extends ViewModel {
                 System.out.println("Resultat Erreur" + t.getLocalizedMessage());
             }
         });
+    }
+
+    private void saveNews(final List<Article> articles) {
+        Task.callInBackground(new Callable<Void>() {
+            @Override
+            public Void call() {
+                DatabaseHelper.getDatabase().articleDao().insertAll(articles);
+                return null;
+            }
+        });
+    }
+
+    public void setSelected(Article article) {
+        selected.setValue(article);
+    }
+
+    public LiveData<Article> getSelected() {
+        return selected;
     }
 
     /*void saveNews(final List<Article> articles) {

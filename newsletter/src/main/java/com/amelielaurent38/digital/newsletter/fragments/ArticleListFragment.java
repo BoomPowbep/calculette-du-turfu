@@ -16,6 +16,7 @@ import com.amelielaurent38.digital.newsletter.viewmodel.ArticleViewModel;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,7 +30,7 @@ public class ArticleListFragment extends Fragment implements ShareListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //Créer ou récuperer l'instance du viewmodel pour ce fragment
-        model = ViewModelProviders.of(this).get(ArticleViewModel.class);
+        model = ViewModelProviders.of(getActivity()).get(ArticleViewModel.class);
     }
 
     @Override
@@ -64,6 +65,28 @@ public class ArticleListFragment extends Fragment implements ShareListener {
         startActivity(sendIntent);
     }
 
+    @Override
+    public void onSelect(Article article) {
+        model.setSelected(article);
+        showDetail();
+    }
+
+    @Override
+    public void onLike(Article article) {
+        //Ici il faut ajouter le like dans la bdd et changer le bouton
+
+    }
+
+    private void showDetail() {
+        ArticleDetailFragment fragment = new ArticleDetailFragment();
+
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
+    }
 
 }
 

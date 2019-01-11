@@ -53,6 +53,7 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
         ImageView mImage;
         View view;
         ImageView mbuttonShare;
+        ImageView buttonLike;
 
         MyViewHolder(View v) {
             super(v);
@@ -61,18 +62,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
             mDescription = v.findViewById(R.id.textDescription);
             mImage = v.findViewById(R.id.image);
             mbuttonShare = v.findViewById(R.id.buttonShare);
+            buttonLike = v.findViewById(R.id.buttonLike);
 
         }
 
         public void bindItem(final Article article) {
-            /*view.setOnClickListener(new View.OnClickListener(){
+            view.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(v.getContext(), PlanetDetailActivity.class);
-                    intent.putExtra("planet", planete);
-                    v.getContext().startActivity(intent);
+                    listener.onSelect(article);
                 }
-            });*/
+            });
 
             mbuttonShare.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +80,15 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.MyViewHo
                     listener.onShare(article);
                 }
             });
+
+            buttonLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buttonLike.setImageResource(R.drawable.ic_favorite);
+                    listener.onLike(article);
+                }
+            });
+
 
             mTitle.setText(article.getTitle());
             mDescription.setText(article.getDescription());
